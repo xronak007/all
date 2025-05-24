@@ -407,9 +407,30 @@ def cvv_check():
         return "CARD NOT SUPPORTED"
     else:
         return f"404 Payment declined\n\nResponse:\n{result2}"    
-        
+ 
+@app.route('/')
+def status():
+    start = time.time()
+    # Можно добавить проверки, например, работоспособность зависимостей
+    # Например, попробовать получить nonce или просто вернуть "OK"
+    status_message = "Script is running ✅"
+    elapsed_ms = int((time.time() - start) * 1000)
+    html = f"""
+    <html>
+        <head><title>Status</title></head>
+        <body style="font-family:monospace; background:#181818; color:#eee;">
+            <h2>Status page</h2>
+            <p>{status_message}</p>
+            <p>Uptime: {elapsed_ms} ms</p>
+            <p>Try <code>/cvv?cc=xxxx|mm|yy|cvv</code> for CVV check API.</p>
+        </body>
+    </html>
+    """
+    return html
+    
+                                  
 #Complete
 
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 8080))
+    port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
