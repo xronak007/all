@@ -160,7 +160,7 @@ def skbased():
         r = requests.post(WEBSITE_API_URL, data=website_data, headers=website_headers, timeout=15)
         website_response = r.json()
     except Exception as ex:
-        return f"cURL Error : {str(ex)}", 500
+        return f"cURL Error : error", 500
 
     # --- 4. Ответ пользователю ---
     if website_response.get("requires_action") is True:
@@ -349,7 +349,7 @@ def cvv_check():
         r = requests.post(WARNISX_SITE, headers=checkout_headers, data=post_data)
         result2 = r.text
     except Exception as e:
-        return jsonify({'error': f'Checkout request failed: {e}'}), 500
+        return jsonify({'error': f'Checkout request failed'}), 500
 
     # 4. Parse and return result
     if "payment_intent_unexpected_state" in result2:
